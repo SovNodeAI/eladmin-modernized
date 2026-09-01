@@ -223,7 +223,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- 打包时跳过测试 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
