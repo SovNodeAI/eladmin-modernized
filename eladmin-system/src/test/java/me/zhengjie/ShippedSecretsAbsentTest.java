@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -72,7 +73,7 @@ public class ShippedSecretsAbsentTest {
     }
 
     @Test
-    public void seedSqlShipsNoUsableCredential() throws IOException {
+    public void seedSqlShipsNoCredentialAndGrantsGuardedMenus() throws IOException {
         Path sql = Path.of("../sql/eladmin.sql");
         assertTrue(Files.exists(sql), "seed sql must be reachable from the module directory");
         String text = read("../sql/eladmin.sql");
@@ -87,5 +88,27 @@ public class ShippedSecretsAbsentTest {
         }
         assertTrue(testRow != null, "seed test account row must exist");
         assertTrue(testRow.contains(", b'0', b'0',"), "seed test account must ship disabled");
+
+        String[] generatorPermissions = {
+                "generator:list",
+                "generator:edit",
+                "generator:code",
+                "genConfig:list",
+                "genConfig:edit"
+        };
+        for (String permission : generatorPermissions) {
+            Pattern menuRow = Pattern.compile(
+                    "INSERT INTO `sys_menu`[^\\n]+VALUES \\((\\d+),[^\\n]+'"
+                            + Pattern.quote(permission) + "'[^\\n]*\\);");
+            Matcher matcher = menuRow.matcher(text);
+            assertTrue(matcher.find(), "seed sql must define the guarded permission " + permission);
+            String menuId = matcher.group(1);
+            assertTrue(text.contains("INSERT INTO `sys_roles_menus` (`menu_id`, `role_id`) VALUES ("
+                            + menuId + ", 1);"),
+                    "seed administrator role must receive " + permission);
+            assertTrue(text.contains("INSERT INTO `sys_roles_menus` (`menu_id`, `role_id`) VALUES ("
+                            + menuId + ", 2);"),
+                    "seed test role must receive " + permission);
+        }
     }
 }
