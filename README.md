@@ -5,60 +5,53 @@
 [![Spring Boot 4.1.1](https://img.shields.io/badge/Spring%20Boot-4.1.1-6DB33F.svg)](https://spring.io/projects/spring-boot)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
-An independently maintained Java 21 and Spring Boot 4.1.1 modernization of [eladmin](https://github.com/elunez/eladmin).
+English | [简体中文](README.zh-CN.md)
 
-This release preserves eladmin's five-module backend structure while modernizing its runtime, framework integrations, security boundaries, configuration, and verification suite. It is not an official eladmin release and is not affiliated with the upstream website, demo, or community channels.
+An independently maintained Java 21 and Spring Boot 4.1.1 modernization of [eladmin](https://github.com/elunez/eladmin), with a checksummed 139-record controller census against upstream commit `55fbf705956949697dbd68bf9003776609d3d029`.
 
-## Release evidence
+The goal is narrow and reviewable: retain the five-module backend and tracked endpoint declarations while migrating the runtime, Jakarta integrations, API documentation, configuration, and verification harness. This is not an official eladmin release and is not affiliated with the upstream website, demo, or community channels.
 
-The publication candidate was verified on August 31, 2026 with:
+## Reproducible release evidence
 
-- 219 tests executed
-- 0 failures
-- 0 errors
-- 0 skipped tests
-- 139 endpoint census records
+The public verification gate requires:
+
+- 185 behavioral tests
+- 33 static migration-contract tests
+- 1 migration snapshot
+- zero failures, errors, and skipped tests
+- real MySQL 8.4 and Redis 7.2 context startup through Testcontainers
+- 139 endpoint census records matching byte for byte
 - 141 OpenAPI operations and 414 schemas
-- positive and negative authorization controls
-- real MySQL and Redis context startup through Testcontainers
-- browser and API smoke verification
-- source linkage, checksum, and secret review gates
+- positive method-security checks and low-privilege denial controls
+- dependency, checksum, provenance, and secret scans
 
-Every public push runs the complete Maven lifecycle with Docker-backed Testcontainers, verifies the endpoint census and OpenAPI audit, and rejects any skipped, failed, or missing tests.
-
-The detailed claims ledger, test taxonomy, risk map, and adversarial review evidence are retained in [`docs/verification`](docs/verification/README.md).
+The three test categories are reported separately; their aggregate is a CI inventory invariant, not a coverage claim. See the public [claims ledger](docs/verification/CLAIMS_LEDGER.md), [test taxonomy](docs/verification/TEST_TAXONOMY.md), [risk map](docs/verification/RISK_MAP.md), and [adversarial guard evidence](docs/verification/REFUTER_EVIDENCE.md).
 
 ## Modernized stack
 
-| Area | Upstream baseline | This release |
+| Area | Upstream baseline | This repository |
 | --- | --- | --- |
 | Java | 8 | 21 |
 | Spring Boot | 2.7.18 | 4.1.1 |
 | API documentation | Springfox | springdoc 3.1.0 |
-| Jakarta migration | Java EE namespaces | Jakarta EE namespaces |
+| Enterprise APIs | Java EE namespaces | Jakarta EE namespaces |
 | MapStruct | Legacy processor chain | 1.6.3 with explicit processor order |
 | Database pool | Legacy Druid starter | Druid Spring Boot 4 starter |
-| Integration testing | Partial and environment-dependent | MySQL 8.4 and Redis 7.2 Testcontainers |
+| Integration tests | Environment-dependent | MySQL and Redis Testcontainers |
 
-The project modules remain:
+The modules remain `eladmin-common`, `eladmin-logging`, `eladmin-system`, `eladmin-tools`, and `eladmin-generator`.
 
-- `eladmin-common`
-- `eladmin-logging`
-- `eladmin-system`
-- `eladmin-tools`
-- `eladmin-generator`
+## Specific security changes
 
-## Security changes
+- Production startup rejects missing database, Redis, JWT, RSA, and DES inputs.
+- The Druid console and S3 integration are disabled by default; the console has no shipped login credential.
+- Password hashes are excluded from login, `/auth/info`, and cache serialization responses.
+- New-user and administrative password-reset operations generate random one-time passwords instead of `123456`.
+- Storage, payment, mail, generator, and verification-code operations have explicit permission checks with low-privilege denial tests.
+- Spreadsheet exports neutralize formula-leading text before writing XLSX cells.
+- fastjson 1.x and Commons Configuration 1.x are banned from the complete Maven dependency graph.
 
-- Production startup fails closed when required credentials are absent or invalid.
-- Database, Redis, JWT, RSA, DES, S3, mail, and payment secrets are no longer shipped as usable repository values.
-- S3 is disabled by default and validates its configuration at startup when enabled.
-- New-user and password-reset credentials are generated randomly and returned once.
-- Administrative storage, payment, mail, generator, and verification routes have explicit authorization controls.
-- Low-privilege negative tests verify denial behavior and the standard HTTP 403 response shape.
-- Vulnerable fastjson 1.x and Commons Configuration 1.x artifacts are excluded and banned from the complete dependency graph.
-
-See [`SECURITY.md`](SECURITY.md) for private vulnerability reporting.
+These controls do not amount to a blanket security certification. DES/CBC remains as documented compatibility debt, and privileged remote-deployment and database-connection features still need deployment-specific isolation. See the [upstream CVE status table](docs/security/UPSTREAM_CVE_STATUS.md) and [`SECURITY.md`](SECURITY.md).
 
 ## Requirements
 
@@ -66,7 +59,7 @@ See [`SECURITY.md`](SECURITY.md) for private vulnerability reporting.
 - Maven 3.9 or newer
 - MySQL 8
 - Redis 7
-- Docker when running the complete integration suite
+- Docker for the complete verification suite
 
 The application listens on port `8000` by default. Select a Spring profile explicitly; packaged builds do not silently select the development profile.
 
@@ -78,7 +71,7 @@ java tools/endpoint-census/EndpointCensus.java . tools/endpoint-census/endpoint-
 java tools/openapi-audit/OpenApiAudit.java .
 ```
 
-The complete Maven verification uses Testcontainers and therefore requires Docker. CI asserts the exact expected test count and fails if any test is skipped.
+The Maven gate uses Testcontainers and therefore requires Docker. GitHub Actions parses every Surefire report and rejects skipped, failed, missing, or unexpected tests.
 
 ## Local setup
 
@@ -88,13 +81,9 @@ Generate local credentials and initialization material:
 bash tools/onboard-local.sh
 ```
 
-The script writes generated values to ignored local files:
+The script writes generated values to ignored local files: `local.env`, `local-bootstrap.sql`, and `local_rsa_public.b64`.
 
-- `local.env`
-- `local-bootstrap.sql`
-- `local_rsa_public.b64`
-
-Load the generated environment, initialize the database with `sql/eladmin.sql`, then apply `local-bootstrap.sql` before starting the application.
+Load the environment, initialize MySQL with `sql/eladmin.sql`, apply `local-bootstrap.sql`, and start the system module:
 
 ```bash
 set -a
@@ -103,7 +92,7 @@ set +a
 mvn -pl eladmin-system -am spring-boot:run
 ```
 
-Validate the onboarding path without starting the application:
+Validate onboarding without starting the application:
 
 ```bash
 bash tools/onboard-local.sh --self-test
@@ -111,7 +100,7 @@ bash tools/onboard-local.sh --self-test
 
 ## Production configuration
 
-Set `SPRING_PROFILES_ACTIVE=prod` and provide the required environment variables:
+Set `SPRING_PROFILES_ACTIVE=prod` and provide:
 
 - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PWD`
 - `REDIS_HOST`, `REDIS_PORT`, `REDIS_DB`, `REDIS_PWD`
@@ -119,22 +108,28 @@ Set `SPRING_PROFILES_ACTIVE=prod` and provide the required environment variables
 - `RSA_PRIVATE_KEY`
 - `ELADMIN_DES_KEY`
 
-Optional integrations remain disabled until explicitly configured. Set `S3_ENABLED=true` only when `S3_ACCESS_KEY` and `S3_SECRET_KEY` are available. The Druid console is disabled by default and requires dedicated credentials when enabled.
+Optional integrations remain disabled until explicitly configured. Set `S3_ENABLED=true` only with dedicated `S3_ACCESS_KEY` and `S3_SECRET_KEY` values. Enable the Druid console only with separate credentials and a restricted allowlist.
 
-## Compatibility notes
+## Frontend and behavior compatibility
 
-HTTP JSON and Redis value serialization continue to use fastjson2 to preserve the existing wire shape. Characterization tests pin date formatting, long-number precision, null handling, and reference behavior.
+The endpoint census preserves controller declarations, but several security-sensitive behaviors deliberately differ from upstream:
 
-Compatibility choices that remain under documented risk acceptance are recorded with their rationale and verification in [`docs/verification/RISK_MAP.md`](docs/verification/RISK_MAP.md) and [`docs/verification/CLAIMS_LEDGER.md`](docs/verification/CLAIMS_LEDGER.md).
+- Verification-code routes require `email:send`.
+- User creation and password reset return a random password once as JSON.
+- Seeded accounts require local onboarding instead of a shared password.
 
-## Attribution
+The stock [eladmin-web](https://github.com/elunez/eladmin-web) frontend does not render the one-time password response and may receive HTTP 403 in the email-change flow. Integrators must adapt those flows before deployment. See [`CHANGES.md`](CHANGES.md) for the complete behavior contract.
 
-This repository is a derivative work of [elunez/eladmin](https://github.com/elunez/eladmin), originally authored by Zheng Jie and distributed under the Apache License 2.0. Upstream copyright notices are preserved. SovNode's modifications are also distributed under Apache License 2.0.
+HTTP JSON and Redis values continue to use fastjson2 to preserve the characterized wire shape. These compatibility choices are pinned by executable tests, not presented as universal equivalence.
 
-See [`NOTICE`](NOTICE) and [`LICENSE`](LICENSE) for complete attribution and license terms.
+## Attribution and development disclosure
+
+This repository is a derivative work of [elunez/eladmin](https://github.com/elunez/eladmin), originally authored by Zheng Jie and distributed under Apache License 2.0. Upstream notices are preserved, and SovNode’s modifications use the same license. See [`NOTICE`](NOTICE) and [`LICENSE`](LICENSE).
+
+The modernization was implemented with AI-assisted engineering under human direction. Release claims are limited to reproducible public checks and independent review; deployment-specific testing and operator judgment remain necessary.
 
 ## Spring modernization services
 
-SovNode helps teams migrate production Spring applications from Java 8, 11, or 17 and Spring Boot 2.x or 3.x to current supported releases. Engagements can include compatibility assessment, implementation, security review, test recovery, CI modernization, and runtime validation.
+SovNode helps teams move production Spring applications from Java 8, 11, or 17 and Spring Boot 2.x or 3.x to supported releases. Engagements can include compatibility assessment, implementation, security review, test recovery, CI modernization, frontend coordination, and runtime validation.
 
-Contact **admin1@sovnode.ai** for a private migration assessment.
+For a private migration assessment, contact **admin1@sovnode.ai**.
