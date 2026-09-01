@@ -62,9 +62,9 @@ jobs:
                   totals[key] += int(root.attrib.get(key, 0))
 
           print(f"reports={len(reports)} " + " ".join(f"{key}={value}" for key, value in totals.items()))
-          expected = {"tests": 216, "failures": 0, "errors": 0, "skipped": 0}
-          if totals != expected or len(reports) != 42:
-              print(f"Expected reports=42 and totals={expected}", file=sys.stderr)
+          expected = {"tests": 219, "failures": 0, "errors": 0, "skipped": 0}
+          if totals != expected or len(reports) != 43:
+              print(f"Expected reports=43 and totals={expected}", file=sys.stderr)
               raise SystemExit(1)
           PY
 

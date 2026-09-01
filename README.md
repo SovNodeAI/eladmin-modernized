@@ -13,7 +13,7 @@ This release preserves eladmin's five-module backend structure while modernizing
 
 The publication candidate was verified on August 31, 2026 with:
 
-- 216 tests executed
+- 219 tests executed
 - 0 failures
 - 0 errors
 - 0 skipped tests
@@ -56,6 +56,7 @@ The project modules remain:
 - New-user and password-reset credentials are generated randomly and returned once.
 - Administrative storage, payment, mail, generator, and verification routes have explicit authorization controls.
 - Low-privilege negative tests verify denial behavior and the standard HTTP 403 response shape.
+- Vulnerable fastjson 1.x and Commons Configuration 1.x artifacts are excluded and banned from the complete dependency graph.
 
 See [`SECURITY.md`](SECURITY.md) for private vulnerability reporting.
 
@@ -124,7 +125,7 @@ Optional integrations remain disabled until explicitly configured. Set `S3_ENABL
 
 HTTP JSON and Redis value serialization continue to use fastjson2 to preserve the existing wire shape. Characterization tests pin date formatting, long-number precision, null handling, and reference behavior.
 
-Several inherited dependencies remain under documented risk acceptance because replacing them would change application behavior. The rationale and verification for each accepted dependency are recorded in [`docs/verification/RISK_MAP.md`](docs/verification/RISK_MAP.md) and [`docs/verification/CLAIMS_LEDGER.md`](docs/verification/CLAIMS_LEDGER.md).
+Compatibility choices that remain under documented risk acceptance are recorded with their rationale and verification in [`docs/verification/RISK_MAP.md`](docs/verification/RISK_MAP.md) and [`docs/verification/CLAIMS_LEDGER.md`](docs/verification/CLAIMS_LEDGER.md).
 
 ## Attribution
 

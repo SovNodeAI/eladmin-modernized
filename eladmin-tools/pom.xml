@@ -13,7 +13,6 @@
 
     <properties>
         <alipay.version>4.22.57.ALL</alipay.version>
-        <fastjson.version>1.2.83_noneautotype</fastjson.version>
         <dom4j.version>2.2.0</dom4j.version>
         <bcprov.version>1.85.2</bcprov.version>
     </properties>
@@ -44,7 +43,8 @@
             </exclusions>
         </dependency>
 
-        <!--支付宝依赖：SDK 的三个遗留传递依赖改由下方修复线直接提供-->
+        <!-- 支付宝依赖：移除未使用且存在已知漏洞的 fastjson 1.x，
+             其余两个遗留传递依赖改由下方维护中的坐标直接提供。 -->
         <dependency>
             <groupId>com.alipay.sdk</groupId>
             <artifactId>alipay-sdk-java</artifactId>
@@ -63,11 +63,6 @@
                     <artifactId>bcprov-jdk15on</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.dom4j</groupId>

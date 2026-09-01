@@ -15,9 +15,11 @@
  */
 package me.zhengjie.utils;
 
-import org.apache.commons.configuration.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 
 /**
  * sql字段转java
@@ -26,7 +28,8 @@ import org.slf4j.LoggerFactory;
  * @date 2019-01-03
  */
 public class ColUtil {
-    private static final Logger log = LoggerFactory.getLogger(ColUtil.class);
+    private static final String CONFIG_RESOURCE = "gen.properties";
+    private static final Properties CONFIG = loadConfig();
 
     /**
      * 转换mysql数据类型为java数据类型
@@ -35,20 +38,28 @@ public class ColUtil {
      * @return String
      */
     static String cloToJava(String type) {
-        Configuration config = getConfig();
-        assert config != null;
-        return config.getString(type, "unknowType");
+        return CONFIG.getProperty(type, "unknowType");
     }
 
     /**
      * 获取配置信息
      */
-    public static PropertiesConfiguration getConfig() {
-        try {
-            return new PropertiesConfiguration("gen.properties");
-        } catch (ConfigurationException e) {
-            log.error(e.getMessage(), e);
+    public static Properties getConfig() {
+        Properties copy = new Properties();
+        copy.putAll(CONFIG);
+        return copy;
+    }
+
+    private static Properties loadConfig() {
+        try (InputStream stream = ColUtil.class.getClassLoader().getResourceAsStream(CONFIG_RESOURCE)) {
+            if (stream == null) {
+                throw new IllegalStateException("Missing generator configuration: " + CONFIG_RESOURCE);
+            }
+            Properties properties = new Properties();
+            properties.load(new InputStreamReader(stream, StandardCharsets.UTF_8));
+            return properties;
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to load generator configuration: " + CONFIG_RESOURCE, e);
         }
-        return null;
     }
 }

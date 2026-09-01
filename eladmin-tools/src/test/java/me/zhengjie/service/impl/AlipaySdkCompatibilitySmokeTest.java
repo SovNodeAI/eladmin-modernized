@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 支付宝 SDK 兼容性冒烟测试：用本地生成的测试密钥直接驱动 AlipayClient 的
  * pageExecute 本地签名与 rsaCheckV2 验签，不访问网络、不使用真实凭据。
  * 它不经过 AliPayServiceImpl（服务实现不可注入 client 工厂），验证的是
- * 依赖坐标治理（fastjson、dom4j、bcprov）前后 SDK 本身可用。
+ * 依赖坐标治理（移除 fastjson 1.x，更新 dom4j 与 bcprov）前后 SDK 本身可用。
  * 依赖坐标治理前后该测试必须同样通过。
  *
  * @author Zheng Jie

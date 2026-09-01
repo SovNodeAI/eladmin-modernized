@@ -20,11 +20,12 @@ import org.junit.jupiter.api.Test;
 import java.security.CodeSource;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * 支付宝依赖图契约测试：alipay sdk 的三个遗留传递依赖必须落在修复线上，
- * fastjson 1.2.83_noneautotype、dom4j 2.2.0、bcprov jdk18on，旧坐标不得再出现在类路径。
+ * 支付宝依赖图契约测试：alipay sdk 的遗留 fastjson 1.x 依赖不得进入类路径，
+ * dom4j 与 Bouncy Castle 必须落在维护中的坐标。
  *
  * @author Zheng Jie
  */
@@ -40,9 +41,11 @@ class AlipayDependencyGraphContractTest {
     }
 
     @Test
-    void fastjsonStaysOnThePatchedTerminalLine() throws Exception {
-        assertTrue(jarOf("com.alibaba.fastjson.JSON").endsWith("fastjson-1.2.83_noneautotype.jar"),
-                "fastjson must resolve to 1.2.83_noneautotype, the patched terminal 1.2.x release with autotype disabled");
+    void legacyFastjsonIsAbsentFromTheRuntimeClasspath() {
+        assertThrows(ClassNotFoundException.class,
+                () -> Class.forName("com.alibaba.fastjson.JSON", false,
+                        AlipayDependencyGraphContractTest.class.getClassLoader()),
+                "fastjson 1.x must not be present on the Alipay runtime classpath");
     }
 
     @Test
