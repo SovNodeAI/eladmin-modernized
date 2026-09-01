@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 生成的 delete 方法保留完整描述且与 Spring 的 @RequestBody 不冲突。
  * 纯文本断言，不依赖数据库、Redis 或模板渲染运行时。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @org.junit.jupiter.api.Tag("static-contract")
 class GeneratorTemplateContractTest {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * TLS 握手、SMTP 认证、消息送达），证明 angus-mail 迁移后类链接成立。
  * 在旧的 javax 命名空间 Mail.create 实现上，本测试以 NoClassDefFoundError 失败。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @Tag("behavioral")
 class EmailServiceImplBehaviorTest {

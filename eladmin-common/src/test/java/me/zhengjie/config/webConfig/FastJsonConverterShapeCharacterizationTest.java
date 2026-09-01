@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Framework 7 上靠二进制兼容工作，注册入口 configureMessageConverters 已被标记
  * forRemoval；若未来该转换器被静默丢掉（Jackson 兜底输出不同形状），本测试变红。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @Tag("behavioral")
 class FastJsonConverterShapeCharacterizationTest {

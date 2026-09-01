@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 支付宝依赖图契约测试：alipay sdk 的遗留 fastjson 1.x 依赖不得进入类路径，
  * dom4j 与 Bouncy Castle 必须落在维护中的坐标。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @org.junit.jupiter.api.Tag("behavioral")
 class AlipayDependencyGraphContractTest {

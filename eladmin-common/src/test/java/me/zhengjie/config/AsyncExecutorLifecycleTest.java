@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 异步线程池生命周期测试：@Async 执行器必须是 Spring 管理的 bean，
  * 上下文关闭后 el-async 工作线程必须退出，打包后的 JVM 才能干净停止。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @org.junit.jupiter.api.Tag("behavioral")
 class AsyncExecutorLifecycleTest {

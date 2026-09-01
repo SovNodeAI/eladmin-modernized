@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 启动抛出异常也必然恢复标准输出流；关闭本身由 AutoCloseable 保证，
  * 只保留真正可能失败的断言。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @Tag("behavioral")
 class StartupBannerVersionTest {

@@ -1,3 +1,18 @@
+/*
+ *  Copyright 2026 SovNode
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package me.zhengjie.generator;
 
 import org.junit.jupiter.api.Tag;
@@ -23,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 计划在迁移验收后按计划清理。此前 system 模块存在近乎重复的
  * OpenApiMigrationSourceAuditTest，已删除合并到本类。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @Tag("static-contract")
 class OpenApiMigrationContractTest {

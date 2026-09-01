@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * skipTests 只能通过命令行 -DskipTests=true 显式关闭；任何模块不得
  * 通过 surefire 排除把测试挡在默认验证门之外。静态文本检查，属迁移脚手架。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @org.junit.jupiter.api.Tag("static-contract")
 class ReleaseIntegritySourceAuditTest {

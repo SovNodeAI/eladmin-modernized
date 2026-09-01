@@ -55,7 +55,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * {@link ApiError} 的 status/timestamp/message 三字段契约，且被拒调用不产生任何变更；
  * 其余 Throwable 仍走默认 400 行为。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @Tag("behavioral")
 class GlobalExceptionHandlerAccessDeniedTest {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 属 Boot 2 时代且仓库内零消费者，必须整体移除。本测试静态校验配置与依赖，
  * 不启动 Spring 上下文，不依赖 MySQL 或 Redis；属迁移脚手架，计划事后清理。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @org.junit.jupiter.api.Tag("static-contract")
 class RedisRuntimeContractTest {

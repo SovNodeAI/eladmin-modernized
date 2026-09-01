@@ -26,16 +26,17 @@ boundaries, configuration, and the test suite. This NOTICE identifies
 those modifications at the project level. The public repository is a
 clean release snapshot derived from upstream eladmin commit 55fbf70.
 
-File level notice coverage: every file modified relative to upstream
-base 55fbf70 carries a "Modified by SovNode in 2026 (Spring Boot 4.1
-modernization); see NOTICE." comment adjacent to the upstream copyright
-header or the XML declaration, except the two files below, which are
-covered by this project level NOTICE instead. README.md is a full
+File level notice coverage: every substantively modified inherited
+source file relative to upstream base 55fbf70 carries a "Modified by
+SovNode in 2026 (Spring Boot 4.1 modernization); see NOTICE." comment
+adjacent to the upstream copyright header or XML declaration. Files
+whose only difference is whitespace normalization remain covered by
+the upstream notice and this project level NOTICE. README.md is a full
 SovNode rewrite that carries SovNode authorship and references this
 NOTICE in its license and attribution section.
 eladmin-system/src/main/resources/banner.txt has no comment syntax: the
 file is printed verbatim at every application start, so an in-file
-marker would corrupt the startup banner. Both remain attributed here.
+marker would corrupt the startup banner. It remains attributed here.
 
 This NOTICE is informational. It does not modify the Apache License,
 Version 2.0 under which this project is distributed.

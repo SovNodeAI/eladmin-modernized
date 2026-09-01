@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 模板序列化器做值往返。FastJsonRedisSerializer 以 WriteClassName 写出 @type，
  * me.zhengjie 白名单在模板构建时注册；往返断裂或 @type 丢失都会让本测试变红。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @Tag("behavioral")
 class FastJsonRedisSerializerRoundTripTest {

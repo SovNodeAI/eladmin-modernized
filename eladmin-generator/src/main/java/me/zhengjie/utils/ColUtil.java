@@ -1,5 +1,6 @@
 /*
  *  Copyright 2019-2025 Zheng Jie
+ *  Modified by SovNode in 2026 (Spring Boot 4.1 modernization); see NOTICE.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * 生产环境占位符等配置契约全部保留，且不得回退 HikariCP 或引入 hikari 配置块。
  * 纯静态检查，不启动 Spring 上下文，不依赖 MySQL 或 Redis。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @org.junit.jupiter.api.Tag("static-contract")
 class DatasourceContractTest {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * LocalStorageMapper 的 toDto / toEntity 往返，处理器若与 Lombok
  * 脱节会在本测试下产生空值断言失败。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @Tag("behavioral")
 class LocalStorageMapperRoundTripTest {

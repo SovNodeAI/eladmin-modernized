@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * MapStruct 1.6.3 生成代码的行为验证（logging 模块）：逐字段断言
  * LogErrorMapper 的 toDto / toEntity 往返。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @Tag("behavioral")
 class LogErrorMapperRoundTripTest {

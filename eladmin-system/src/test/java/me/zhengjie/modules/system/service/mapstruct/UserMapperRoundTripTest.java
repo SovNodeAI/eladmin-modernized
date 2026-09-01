@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * 若处理器未与 Lombok 协作，会生成编译通过但字段全空的映射器。
  * 本测试逐字段断言 toDto 与 toEntity 的往返值，把该静默失败变成红灯。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @Tag("behavioral")
 class UserMapperRoundTripTest {

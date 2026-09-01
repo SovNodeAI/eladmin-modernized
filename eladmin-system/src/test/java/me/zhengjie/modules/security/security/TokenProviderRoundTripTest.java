@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Token 行为对等性测试：只通过 TokenProvider 公开 API 断言签发与解析契约，
  * 与底层 jjwt 序列化实现无关，序列器更换（jackson 到 gson）前后必须同样通过。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @org.junit.jupiter.api.Tag("behavioral")
 class TokenProviderRoundTripTest {

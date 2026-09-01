@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 无数据库、无 Redis 的安全链路对等性测试：验证 Spring Security 7 迁移后
  * 匿名路由、静态资源、OPTIONS、受保护 GET/PUT 的授权行为与 JSON 失败契约。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @org.junit.jupiter.api.Tag("behavioral")
 class SecurityChainParityTest {

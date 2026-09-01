@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2025 Zheng Jie
+ *  Copyright 2026 SovNode
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * 依赖坐标治理（移除 fastjson 1.x，更新 dom4j 与 bcprov）前后 SDK 本身可用。
  * 依赖坐标治理前后该测试必须同样通过。
  *
- * @author Zheng Jie
+ * @author SovNode
  */
 @org.junit.jupiter.api.Tag("behavioral")
 class AlipaySdkCompatibilitySmokeTest {
