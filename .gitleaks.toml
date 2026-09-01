@@ -1,0 +1,8 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Password generator alphabet"
+paths = ['''eladmin-system/src/main/java/me/zhengjie/modules/system/rest/UserController.java''']
+regexTarget = "line"
+regexes = ['''private static final String PASSWORD_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";''']

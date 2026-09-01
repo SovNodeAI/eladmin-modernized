@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Modified by SovNode in 2026 (Spring Boot 4.1 modernization); see NOTICE. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>eladmin</artifactId>
+        <groupId>me.zhengjie</groupId>
+        <version>1.0.0-sov</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>eladmin-tools</artifactId>
+    <name>工具模块</name>
+
+    <properties>
+        <alipay.version>4.22.57.ALL</alipay.version>
+        <fastjson.version>1.2.83_noneautotype</fastjson.version>
+        <dom4j.version>2.2.0</dom4j.version>
+        <bcprov.version>1.85.2</bcprov.version>
+    </properties>
+
+    <dependencies>
+        <!-- 同时需要common模块和logging模块只需要引入logging模块即可 -->
+        <dependency>
+            <groupId>me.zhengjie</groupId>
+            <artifactId>eladmin-logging</artifactId>
+            <version>1.0.0-sov</version>
+        </dependency>
+
+        <!--邮件依赖-->
+        <dependency>
+            <groupId>org.eclipse.angus</groupId>
+            <artifactId>angus-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.icegreen</groupId>
+            <artifactId>greenmail-junit5</artifactId>
+            <version>2.1.13</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.angus</groupId>
+                    <artifactId>jakarta.mail</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--支付宝依赖：SDK 的三个遗留传递依赖改由下方修复线直接提供-->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>${alipay.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcprov-jdk15on</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>${bcprov.version}</version>
+        </dependency>
+
+        <!--amazon s3 依赖-->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>2.30.13</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>

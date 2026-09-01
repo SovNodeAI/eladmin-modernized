@@ -1,0 +1,41 @@
+eladmin-modernization
+=====================
+
+This repository is a derivative work of ELADMIN
+(https://github.com/elunez/eladmin), a Spring Boot admin system
+originally authored by Zheng Jie (elunez). It is an independent
+modernization line maintained by SovNode; it is not the official
+upstream project.
+
+Upstream copyright notices, preserved from the upstream distribution:
+
+  Copyright 2019-2023 Zheng Jie            (upstream LICENSE, appendix)
+  Copyright 2019-2025 Zheng Jie            (upstream source file headers)
+
+The upstream project and this repository are licensed under the
+Apache License, Version 2.0; the full license text is retained at
+LICENSE in the repository root.
+
+Modifications in this repository:
+
+  Copyright 2026 SovNode
+
+SovNode modified this project beginning 2026-08-29, migrating it to
+Spring Boot 4.1.1 on Java 21 and reworking dependencies, security
+boundaries, configuration, and the test suite. This NOTICE identifies
+those modifications at the project level. The public repository is a
+clean release snapshot derived from upstream eladmin commit 55fbf70.
+
+File level notice coverage: every file modified relative to upstream
+base 55fbf70 carries a "Modified by SovNode in 2026 (Spring Boot 4.1
+modernization); see NOTICE." comment adjacent to the upstream copyright
+header or the XML declaration, except the two files below, which are
+covered by this project level NOTICE instead. README.md is a full
+SovNode rewrite that carries SovNode authorship and references this
+NOTICE in its license and attribution section.
+eladmin-system/src/main/resources/banner.txt has no comment syntax: the
+file is printed verbatim at every application start, so an in-file
+marker would corrupt the startup banner. Both remain attributed here.
+
+This NOTICE is informational. It does not modify the Apache License,
+Version 2.0 under which this project is distributed.

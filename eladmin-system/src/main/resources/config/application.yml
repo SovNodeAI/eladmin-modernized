@@ -1,0 +1,87 @@
+# Modified by SovNode in 2026 (Spring Boot 4.1 modernization); see NOTICE.
+server:
+  port: 8000
+  http2:
+    # 启用 HTTP/2 支持，提升传输效率
+    enabled: true
+  compression:
+    # 启用 GZIP 压缩，减少传输数据量
+    enabled: true
+    # 需要压缩的 MIME 类型
+    mime-types: text/html, text/xml, text/plain, application/json
+    # 最小压缩响应大小（字节）
+
+spring:
+  freemarker:
+    check-template-location: false
+  profiles:
+    # 显式 profile 契约：打包启动不再默认选中 dev。
+    # 本地开发用 tools/onboard-local.sh 生成 local.env（内含 SPRING_PROFILES_ACTIVE=dev）；
+    # 生产使用 SPRING_PROFILES_ACTIVE=prod 或 --spring.profiles.active=prod。
+    # 未显式选择 profile 时启动在刷新前失败关闭（BootstrapFailClosedGuard）。
+    # 如需 quartz 分布式支持，激活 dev,quartz 或 prod,quartz。
+    active: ${SPRING_PROFILES_ACTIVE:}
+  data:
+    redis:
+      repositories:
+        enabled: false
+      #数据库索引
+      database: ${REDIS_DB:0}
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PWD:}
+      #连接超时时间
+      timeout: 5000
+      # 连接池配置
+      lettuce:
+        pool:
+          # 连接池最大连接数
+          max-active: 30
+          # 连接池最大阻塞等待时间（毫秒），负值表示没有限制
+          max-wait: -1
+          # 连接池中的最大空闲连接数
+          max-idle: 20
+          # 连接池中的最小空闲连接数
+          min-idle: 1
+#  pid:
+#    file: /自行指定位置/eladmin.pid
+
+  #配置 Jpa
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: true
+    # Hibernate 6 已移除 MySQL5InnoDBDialect，由方言自动检测根据数据源选择（MySQL 对应 MySQLDialect）
+
+springdoc:
+  api-docs:
+    enabled: ${swagger.enabled:true}
+  swagger-ui:
+    enabled: ${swagger.enabled:true}
+    path: /doc.html
+
+task:
+  pool:
+    # 核心线程池大小
+    core-pool-size: 10
+    # 最大线程数
+    max-pool-size: 30
+    # 活跃时间
+    keep-alive-seconds: 60
+    # 队列容量
+    queue-capacity: 50
+
+#邮箱验证码有效时间/秒
+code:
+  expiration: 300
+
+#密码加密传输，前端公钥加密，后端私钥解密
+rsa:
+  private_key: ${RSA_PRIVATE_KEY}
+
+# S3 对象存储为显式启用（opt-in，SOV-1037）：默认关闭，未配置 S3 的部署可正常启动；
+# 显式启用（S3_ENABLED=true）时，S3_ACCESS_KEY/S3_SECRET_KEY 等输入在启动期校验，
+# 为空则在 "Started" 标记之前按输入名失败关闭；未启用时 S3 写路径返回确定性的 503。
+amz:
+  s3:
+    enabled: ${S3_ENABLED:false}

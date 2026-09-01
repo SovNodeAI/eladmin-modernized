@@ -1,0 +1,11 @@
+# Modified by SovNode in 2026 (Spring Boot 4.1 modernization); see NOTICE.
+### IDEA ###
+.idea/*
+*.iml
+*/target/*
+*/*.iml
+/.gradle/
+/application.pid
+/local.env
+/local-bootstrap.sql
+/local_rsa_public.b64

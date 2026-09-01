@@ -1,0 +1,76 @@
+/*
+ *  Copyright 2019-2025 Zheng Jie
+ *  Modified by SovNode in 2026 (Spring Boot 4.1 modernization); see NOTICE.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package me.zhengjie.rest;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
+import me.zhengjie.annotation.Log;
+import me.zhengjie.domain.EmailConfig;
+import me.zhengjie.domain.vo.EmailVo;
+import me.zhengjie.exception.BadRequestException;
+import me.zhengjie.service.EmailService;
+import me.zhengjie.service.dto.EmailConfigRedactedDto;
+import me.zhengjie.service.dto.EmailConfigUpdateDto;
+import me.zhengjie.service.dto.SecretMask;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+/**
+ * 发送邮件
+ * @author 郑杰
+ * @date 2018/09/28 6:55:53
+ */
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("api/email")
+@Tag(name = "工具：邮件管理")
+public class EmailController {
+
+    private final EmailService emailService;
+
+    @GetMapping
+    @PreAuthorize("@el.check('email:list')")
+    public ResponseEntity<EmailConfigRedactedDto> queryEmailConfig(){
+        return new ResponseEntity<>(EmailConfigRedactedDto.from(emailService.find()),HttpStatus.OK);
+    }
+
+    @Log("配置邮件")
+    @PutMapping
+    @Operation(summary = "配置邮件")
+    @PreAuthorize("@el.check('email:edit')")
+    public ResponseEntity<Object> updateEmailConfig(@Validated @RequestBody EmailConfigUpdateDto emailConfig) throws Exception {
+        EmailConfig stored = emailService.find();
+        if (stored.getId() == null && SecretMask.isRetained(emailConfig.getPass())) {
+            throw new BadRequestException("首次配置邮件必须填写邮箱密码");
+        }
+        emailService.config(emailConfig.toConfigMergingSecretFrom(stored), stored);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Log("发送邮件")
+    @PostMapping
+    @Operation(summary = "发送邮件")
+    @PreAuthorize("@el.check('email:send')")
+    public ResponseEntity<Object> sendEmail(@Validated @RequestBody EmailVo emailVo){
+        emailService.send(emailVo,emailService.find());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+}
