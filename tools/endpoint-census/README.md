@@ -14,6 +14,10 @@ line.
 - `endpoint-census.txt.sha256` - SHA-256 of the canonical census body, as 64
   lowercase hex characters followed by a single LF. The checksum file content is
   byte-identical across runs.
+- `upstream-55fbf705-endpoint-census.txt` - output produced by this same tool
+  from upstream commit `55fbf705956949697dbd68bf9003776609d3d029`.
+- `upstream-55fbf705-endpoint-census.txt.sha256` - checksum of the pinned
+  upstream output.
 - `.gitattributes` - pins LF line endings for everything in this directory so
   the artifact bytes stay stable on any OS and any `core.autocrlf` setting.
 
@@ -37,6 +41,26 @@ To re-verify the committed artifact:
 ```
 java tools/endpoint-census/EndpointCensus.java . tools/endpoint-census/endpoint-census.txt verify
 ```
+
+## Pinned upstream comparison
+
+The raw current and upstream census files retain their own `source_location`
+line numbers, so they are intentionally not byte-identical as whole files.
+Endpoint parity compares the first six columns: mapping kind, HTTP method,
+route, controller simple name, controller FQN, and handler method. The public
+CI gate verifies the upstream checksum and requires all 139 projected
+signatures to be byte-identical. Their canonical projected SHA-256 is
+`694d6339ae9deeaff0886816ec8efad0de2fb3f7ea7d67a562c173a8e7b38c41`.
+
+On Bash, reproduce the comparison from the repository root:
+
+```bash
+diff --unified \
+  <(grep -v '^#' tools/endpoint-census/upstream-55fbf705-endpoint-census.txt | cut -d'|' -f1-6) \
+  <(grep -v '^#' tools/endpoint-census/endpoint-census.txt | cut -d'|' -f1-6)
+```
+
+Successful parity produces no diff and exits with status 0.
 
 ## What the tool enforces
 
@@ -115,7 +139,9 @@ change that caused the shift.
 
 ## Provenance
 
-The census and its anchors (139 total; 6 anonymous endpoints; the single
-`/api/aliPay/notify` `UNKNOWN` row) are cross-checked against the baseline
-endpoint inventory recorded at the start of the migration, which records
-139 method-level endpoints across 26 `@RestController` classes.
+The upstream artifact was generated from a detached checkout of
+`elunez/eladmin` commit `55fbf705956949697dbd68bf9003776609d3d029`
+using the `EndpointCensus.java` tracked in this repository. The current and
+upstream files each contain 139 records across 26 `@RestController` classes,
+including 6 anonymous endpoints and the single `/api/aliPay/notify` `UNKNOWN`
+row. CI verifies both the stored upstream checksum and semantic parity.

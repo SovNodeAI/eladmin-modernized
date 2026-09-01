@@ -6,7 +6,7 @@ This ledger limits release claims to facts a reviewer can reproduce from this re
 | --- | --- | --- |
 | The project builds for Java 21 on Spring Boot 4.1.1 | Root [`pom.xml`](../../pom.xml), module poms, and the startup banner test | `mvn -B -ntp clean verify` |
 | The backend keeps the five upstream modules | Root reactor module list | Inspect `pom.xml` or run `mvn help:effective-pom` |
-| The controller inventory contains 139 endpoint records | Checksummed [`endpoint-census.txt`](../../tools/endpoint-census/endpoint-census.txt) and its verifier | `java tools/endpoint-census/EndpointCensus.java . tools/endpoint-census/endpoint-census.txt verify` |
+| The controller inventory contains 139 endpoint signatures matching upstream commit `55fbf705956949697dbd68bf9003776609d3d029` | Checksummed [current census](../../tools/endpoint-census/endpoint-census.txt), [upstream census](../../tools/endpoint-census/upstream-55fbf705-endpoint-census.txt), and the CI parity gate | Verify the current census, then run the six-column comparison documented in the [census README](../../tools/endpoint-census/README.md) |
 | The migrated OpenAPI model contains 141 operations and 414 schemas | Source-driven OpenAPI audit | `java tools/openapi-audit/OpenApiAudit.java .` |
 | The suite contains 185 behavioral tests, 33 static contract tests, and 1 migration snapshot | Tagged test sources and [`TEST_TAXONOMY.md`](TEST_TAXONOMY.md) | Run the Maven gate and inspect `target/surefire-reports` |
 | Docker-backed application contexts start with MySQL 8.4 and Redis 7.2 | `EladminSystemApplicationTests` and `ProdProfileContextBootTests` use Testcontainers | The complete Maven gate must execute them with zero skips |
@@ -21,7 +21,7 @@ This ledger limits release claims to facts a reviewer can reproduce from this re
 
 ## Claim discipline
 
-- “Endpoint preserving” refers to the tracked 139-record controller census against the stated upstream baseline. It does not promise identical database state or UI behavior.
+- “Endpoint preserving” means the mapping kind, HTTP method, route, controller identity, and handler method match across the 139-record current and upstream censuses. Source locations are retained but excluded from parity because modernization edits move line numbers. The claim does not promise identical authorization, responses, database state, or UI behavior.
 - “Verified” means the public workflow ran the cited checks. It does not mean every possible production integration was exercised.
 - Security statements name specific controls. The project does not claim a complete security audit or blanket production readiness.
 - Compatibility exceptions and unresolved risks remain visible in [`RISK_MAP.md`](RISK_MAP.md) and [`../security/UPSTREAM_CVE_STATUS.md`](../security/UPSTREAM_CVE_STATUS.md).

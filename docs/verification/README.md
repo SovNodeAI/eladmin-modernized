@@ -17,4 +17,4 @@ java tools/endpoint-census/EndpointCensus.java . tools/endpoint-census/endpoint-
 java tools/openapi-audit/OpenApiAudit.java .
 ```
 
-The expected results are 185 behavioral tests, 33 static contract tests, 1 migration snapshot, zero failures, zero errors, zero skips, 139 endpoint census records, 141 OpenAPI operations, and 414 schemas.
+The expected results are 185 behavioral tests, 33 static contract tests, 1 migration snapshot, zero failures, zero errors, zero skips, 139 endpoint census records whose six semantic signature columns match the pinned upstream artifact, 141 OpenAPI operations, and 414 schemas.

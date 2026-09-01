@@ -71,6 +71,54 @@ jobs:
       - name: Endpoint census verify gate
         run: java tools/endpoint-census/EndpointCensus.java . tools/endpoint-census/endpoint-census.txt verify
 
+      - name: Upstream endpoint signature parity gate
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import difflib
+          import hashlib
+          from pathlib import Path
+
+          current_path = Path("tools/endpoint-census/endpoint-census.txt")
+          upstream_path = Path("tools/endpoint-census/upstream-55fbf705-endpoint-census.txt")
+          upstream_checksum_path = Path(str(upstream_path) + ".sha256")
+
+          def signatures(path):
+              result = []
+              for line in path.read_text(encoding="utf-8").splitlines():
+                  if not line or line.startswith("#"):
+                      continue
+                  fields = line.split("|")
+                  if len(fields) != 7:
+                      raise SystemExit(f"Malformed census row in {path}: {line}")
+                  result.append("|".join(fields[:6]))
+              return result
+
+          upstream_bytes = upstream_path.read_bytes()
+          expected_upstream_hash = upstream_checksum_path.read_text(encoding="utf-8").strip()
+          actual_upstream_hash = hashlib.sha256(upstream_bytes).hexdigest()
+          if actual_upstream_hash != expected_upstream_hash:
+              raise SystemExit(
+                  f"Upstream census checksum mismatch: {actual_upstream_hash} != {expected_upstream_hash}"
+              )
+
+          current = signatures(current_path)
+          upstream = signatures(upstream_path)
+          if len(current) != 139 or len(upstream) != 139:
+              raise SystemExit(
+                  f"Expected 139 signatures in each census, got current={len(current)} upstream={len(upstream)}"
+              )
+          if current != upstream:
+              print("\n".join(difflib.unified_diff(upstream, current, "upstream", "current")))
+              raise SystemExit("Endpoint signature parity failed")
+
+          semantic_bytes = ("\n".join(current) + "\n").encode("utf-8")
+          print(
+              "UPSTREAM PARITY OK: 139 mapping, method, route, controller, and handler "
+              f"signatures match; SHA-256 {hashlib.sha256(semantic_bytes).hexdigest()}"
+          )
+          PY
+
       - name: OpenAPI audit gate
         run: java tools/openapi-audit/OpenApiAudit.java .
 

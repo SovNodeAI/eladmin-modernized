@@ -7,7 +7,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-An independently maintained Java 21 and Spring Boot 4.1.1 modernization of [eladmin](https://github.com/elunez/eladmin), with a checksummed 139-record controller census against upstream commit `55fbf705956949697dbd68bf9003776609d3d029`.
+An independently maintained Java 21 and Spring Boot 4.1.1 modernization of [eladmin](https://github.com/elunez/eladmin), with checksummed current and upstream censuses whose 139 mapping, method, route, controller, and handler signatures match.
 
 The goal is narrow and reviewable: retain the five-module backend and tracked endpoint declarations while migrating the runtime, Jakarta integrations, API documentation, configuration, and verification harness. This is not an official eladmin release and is not affiliated with the upstream website, demo, or community channels.
 
@@ -20,7 +20,7 @@ The public verification gate requires:
 - 1 migration snapshot
 - zero failures, errors, and skipped tests
 - real MySQL 8.4 and Redis 7.2 context startup through Testcontainers
-- 139 endpoint census records matching byte for byte
+- 139 endpoint signatures matching upstream commit `55fbf705956949697dbd68bf9003776609d3d029`; raw artifacts retain their own source locations
 - 141 OpenAPI operations and 414 schemas
 - positive method-security checks and low-privilege denial controls
 - dependency, checksum, provenance, and secret scans
