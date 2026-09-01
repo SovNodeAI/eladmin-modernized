@@ -12,7 +12,7 @@
     <name>工具模块</name>
 
     <properties>
-        <alipay.version>4.22.57.ALL</alipay.version>
+        <alipay.version>4.40.978.ALL</alipay.version>
         <dom4j.version>2.2.0</dom4j.version>
         <bcprov.version>1.85.2</bcprov.version>
     </properties>
@@ -79,7 +79,7 @@
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>s3</artifactId>
-            <version>2.30.13</version>
+            <version>2.54.7</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
