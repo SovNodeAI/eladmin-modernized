@@ -12,9 +12,9 @@
     <name>工具模块</name>
 
     <properties>
-        <alipay.version>4.22.57.ALL</alipay.version>
+        <alipay.version>4.40.1026.ALL</alipay.version>
         <dom4j.version>2.2.0</dom4j.version>
-        <bcprov.version>1.85.2</bcprov.version>
+        <bcprov.version>1.86</bcprov.version>
     </properties>
 
     <dependencies>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.icegreen</groupId>
             <artifactId>greenmail-junit5</artifactId>
-            <version>2.1.13</version>
+            <version>2.1.14</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>
@@ -79,7 +79,7 @@
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>s3</artifactId>
-            <version>2.30.13</version>
+            <version>2.55.7</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

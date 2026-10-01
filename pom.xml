@@ -31,7 +31,7 @@
         <skipTests>false</skipTests>
         <!-- 2.0.61 是 fastjson2 与 fastjson2-extension-spring6 同时发布的最新版本；
              2.0.62 起不再发布 spring6 扩展，且截至 2026-08-30 不存在 spring7 扩展。 -->
-        <fastjson2.version>2.0.61</fastjson2.version>
+        <fastjson2.version>2.0.65</fastjson2.version>
         <druid.version>1.2.28</druid.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
@@ -104,7 +104,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>3.1.0</version>
+            <version>3.1.1</version>
         </dependency>
 
         <!--Mysql依赖包-->
@@ -125,7 +125,7 @@
         <dependency>
             <groupId>net.dreamlu</groupId>
             <artifactId>mica-ip2region</artifactId>
-            <version>4.1.0</version>
+            <version>4.1.1</version>
         </dependency>
 
         <!--lombok插件-->
@@ -139,12 +139,12 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>5.4.0</version>
+            <version>5.5.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.4.0</version>
+            <version>5.5.1</version>
         </dependency>
         <dependency>
             <groupId>xerces</groupId>
@@ -175,7 +175,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
-            <version>1.13.0</version>
+            <version>1.15.0</version>
         </dependency>
 
         <!--mapStruct依赖-->
